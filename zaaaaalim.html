@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>New Year Note for Zaalim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f172a;
+      color: #f9fafb;
+    }
+
+    /* Gift Box Wrapper */
+    .gift-wrapper {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      cursor: pointer;
+    }
+
+    /* Gift Box Base */
+    .gift-box {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 180px;
+      background: linear-gradient(145deg, #38bdf8, #0ea5e9);
+      border-radius: 14px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #020617;
+    }
+
+    /* Ribbon */
+    .gift-box::before,
+    .gift-box::after {
+      content: "";
+      position: absolute;
+      background: #020617;
+    }
+
+    .gift-box::before {
+      width: 20px;
+      height: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .gift-box::after {
+      height: 20px;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    /* Lid */
+    .gift-lid {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 90px;
+      background: linear-gradient(145deg, #7dd3fc, #38bdf8);
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      transform-origin: bottom center;
+      transition: transform 0.6s ease;
+      z-index: 2;
+    }
+
+    .gift-wrapper.open .gift-lid {
+      transform: rotateX(110deg);
+    }
+
+    /* Card */
+    .card {
+      position: absolute;
+      inset: 0;
+      background: #111827;
+      border-radius: 16px;
+      padding: 28px 24px;
+      max-width: 520px;
+      width: 92%;
+      margin: auto;
+      text-align: center;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .gift-wrapper.open .card {
+      opacity: 1;
+      transform: translateY(-40px);
+      pointer-events: auto;
+    }
+
+    .year {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .title {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-bottom: 16px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid #38bdf8;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #0f172a;
+      background: #38bdf8;
+    }
+
+    .note {
+      margin-top: 12px;
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+
+    .modal {
+      background: #020617;
+      color: #e5e7eb;
+      max-width: 620px;
+      width: 92%;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .modal-body {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      max-height: 65vh;
+      overflow-y: auto;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: #9ca3af;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="gift-wrapper" onclick="openGift()">
+    <div class="gift-lid"></div>
+    <div class="gift-box">Tap to open</div>
+
+    <div class="card">
+      <div class="year">2026</div>
+      <h1 class="title">New Year, Zaalim the cute dolphin</h1>
+      <p class="subtitle">
+        Small note from your <strong>shampoo</strong> to start the year.
+      </p>
+
+      <button type="button" onclick="openModal(event)">
+        shampoo wants to say
+      </button>
+
+      <p class="note">
+        Click the button and read till the end.
+      </p>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="messageModal" class="modal-backdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <div>Shampoo to Zaalim the cute dolphin</div>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+Yoo yooo 🥹 guess what, you retained your shampoo cutie penguin again.
+i am only 3 days late , only 3 days late to wish u a special new year. Happy new year to my best friend and ab toh forever yeh word pe bohot stress dungaa . This 3 days were very heavy with the thought of losing u but u retained me with your efforts.
+
+Might have ruined your first 3 days of the new year, but I promise that I'll try my best to make your 2026 the specialest. I'll put full efforts for you.
+
+i told u that i am replaceable very easily cuz me jasa ahe tasa fakt tuch mala sehen karu shaktes . bachpan se kisike muu se bestfriend sunna tha but sunn nhi paya but aaj tak aisi hukum karne waali zaalim aane ka wait tha shayad .... ye lines yaad aati hai tere wajah se hamesha ki "Kabhi kabhi sochta hoon🙃.... 
+Tuu naaa aata toh... :)
+Koi aata hi nhi .... 🙂"
+
+
+Tu majhi yevdi care ghetes, yevda think kartes, bas that's enough. Kabhi kabhi saste nashe karke ruth jaata hu, jhagda karta hu, but tu phir mujhe apni pyaari tangdi maarke mana leti hai 😭
+
+Jokes side, ek baat clear hai: tere se kabhi muu nahi fer sakta. I can't ignore you. BESTIED YOU SO HARD that u made me realise i cant have a other best friend like you ever ... please mere jealousy , mere gusse , mere ruth jaane ko mana lena please ... ek chotu cutee saaa penguin hoon bas itne jyaada hi nakhre karta hu aur isss naye saal mai bhi bohot nakhre karungaaa cutie 🥹 
+
+Tu hi ek friend hai… oh sorry, best friend. Maine nayi bestie dhundna start bhi kiya tha 🤣 but end mai chahiye ek hi insaan, aur wo tu hi hai, most important part of my life.
+
+Zaalim ka saath ye shampoo nahi chodega aaj ke baad, even if koi force kare tab bhi nahi.
+
+Agar main aaj ke baad tujhe "goodbye" bola, toh seedha ghar pe aake peet dena 😭🙃
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openGift() {
+      document.querySelector(".gift-wrapper").classList.add("open");
+    }
+
+    const modal = document.getElementById("messageModal");
+
+    function openModal(e) {
+      e.stopPropagation();
+      modal.style.display = "flex";
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
